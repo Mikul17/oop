@@ -1,0 +1,16 @@
+[
+  { "id": 1, "name": "Classic White T-Shirt", "price": 19.99, "category": "TSHIRT", "stock": 5 },
+  { "id": 2, "name": "Black Oversized T-Shirt", "price": 24.99, "category": "TSHIRT", "stock": 3 },
+
+  { "id": 3, "name": "Basic Black Hoodie", "price": 49.99, "category": "HOODIE", "stock": 2 },
+  { "id": 4, "name": "Zip-Up Grey Hoodie", "price": 54.99, "category": "HOODIE", "stock": 3 },
+
+  { "id": 5, "name": "Comfy Grey Sweatpants", "price": 39.99, "category": "SWEATPANTS", "stock": 9 },
+  { "id": 6, "name": "Loose Fit Cargo Sweatpants", "price": 54.99, "category": "SWEATPANTS", "stock": 5 },
+
+  { "id": 7, "name": "White Classic Sneakers", "price": 79.99, "category": "SNEAKERS", "stock": 3 },
+  { "id": 8, "name": "Chunky Dad Sneakers", "price": 119.99, "category": "SNEAKERS", "stock": 6 },
+
+  { "id": 9, "name": "White Ankle Socks", "price": 9.99, "category": "SOCKS", "stock": 5 },
+  { "id": 10, "name": "Black Crew Socks", "price": 12.99, "category": "SOCKS", "stock": 5 }
+]
