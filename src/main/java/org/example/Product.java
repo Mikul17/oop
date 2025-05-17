@@ -27,17 +27,11 @@ public class Product {
     }
 
     public void updateStock(int quantity) {
-        if(quantity < 0) {
-            throw new IllegalArgumentException("Quantity cannot be negative");
-        }
-
-        if(quantity > stock) {
-            throw new IllegalArgumentException("Not enough stock");
-        }
-
-        stock -= quantity;
+        stock += quantity;
         if (stock == 0) {
             isAvailable = false;
+            return;
         }
+        isAvailable = true;
     }
 }
