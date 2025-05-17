@@ -35,7 +35,7 @@ public class ProductService {
     public boolean validateRemovalQuantity(String value, int productId){
         try{
             int quantity = Integer.parseInt(value);
-            Optional<Integer> cardQuantity = Cart.getInstance().getCardQuantity(productId);
+            Optional<Integer> cardQuantity = Cart.getInstance().getCartQuantity (productId);
 
             if(cardQuantity.isEmpty()){
                 System.out.println("Product with id " + productId + " is not in cart. (Press Enter to continue)");

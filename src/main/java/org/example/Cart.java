@@ -57,7 +57,7 @@ public class Cart {
         return cart;
     }
 
-    public Optional<Integer> getCardQuantity(int productId) {
+    public Optional<Integer> getCartQuantity (int productId) {
         Product product = Catalog.getInstance().getProductById(productId);
         return cart.containsKey(product) ? Optional.of(cart.get(product)) : Optional.empty();
     }
