@@ -155,7 +155,7 @@ public class MenuPrinter {
             ProductCategory category = ProductCategory.values()[choice - 1];
             filterCriteria = ProductCriteria.categoryIn(Set.of(category));
             System.out.println("Selected category: " + category.name() + " (Press Enter to continue)");
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException | IndexOutOfBoundsException e){
             System.out.println("Invalid choice. (Press Enter to continue)");
         }
     }
@@ -186,10 +186,10 @@ public class MenuPrinter {
                 if (choice >= 1 && choice <= maxChoice) {
                     break;
                 } else {
-                    System.out.println("Invalid choice. Enter a number from " + 1 + " to " + 4 + ".");
+                    System.out.println("Invalid choice. Enter a number from " + 1 + " to " + maxChoice + ".");
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Invalid choice. Enter a number from " + 1 + " to " + 4 + ".");
+                System.out.println("Invalid choice. Enter a number from " + 1 + " to " + maxChoice + ".");
             }
         }
         return choice;
@@ -209,8 +209,8 @@ public class MenuPrinter {
 
         } catch (NumberFormatException e) {
             System.out.println("Invalid product Id. (Press Enter to continue)");
-            scanner.nextLine();
         }
+        scanner.nextLine();
     }
 
     private static void handleRemoveFromCart(Scanner scanner) {
@@ -223,7 +223,7 @@ public class MenuPrinter {
 
             if(ProductService.getInstance().validateRemovalQuantity(qty, productId)) {
                 Cart.getInstance().removeProduct(productId, Integer.parseInt(qty));
-                System.out.println("Removed "+ qty +" product(s) with Id "+ productId +"(Press Enter to continue)");
+                System.out.println("Removed "+ qty +" product(s) with Id "+ productId +" (Press Enter to continue)");
             }
 
         } catch (NumberFormatException e) {

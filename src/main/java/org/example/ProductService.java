@@ -21,7 +21,7 @@ public class ProductService {
             }
 
 
-            if(quantity < 0 && quantity > product.getStock()){
+            if(quantity < 0 || quantity > product.getStock()){
                 System.out.println("Invalid quantity. (Press Enter to continue)");
                 return false;
             }
@@ -42,7 +42,7 @@ public class ProductService {
                 return false;
             }
 
-            if(quantity < 0 && cardQuantity.get() < quantity){
+            if(quantity < 0 || cardQuantity.get() < quantity){
                 System.out.println("Invalid quantity. (Press Enter to continue)");
                 return false;
             }
