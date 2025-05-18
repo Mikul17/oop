@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.Optional;
 import java.util.function.Predicate;
 
-public interface Criteria {
+public sealed interface Criteria permits ProductCriteria.GenericCriteria {
     Predicate<Product> toPredicate();
     Optional<Comparator<Product>> toComparator();
 }
