@@ -1,25 +1,28 @@
 package org.example;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Product {
 
+    @EqualsAndHashCode.Include
     private int id;
+    @EqualsAndHashCode.Include
     private String name;
     private double price;
     private ProductCategory category;
     private int stock;
     private boolean isAvailable = true;
+
 
     @Override
     public String toString() {

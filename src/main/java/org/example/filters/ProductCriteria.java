@@ -9,7 +9,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class ProductCriteria {
-        private record GenericCriteria(Predicate<Product> predicate, Comparator<Product> comparator) implements Criteria {
+        record GenericCriteria(Predicate<Product> predicate, Comparator<Product> comparator) implements Criteria {
             @Override
             public Predicate<Product> toPredicate() {
                 return predicate;
