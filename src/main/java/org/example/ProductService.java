@@ -35,6 +35,7 @@ public class ProductService {
     public boolean validateRemovalQuantity(String value, int productId){
         try{
             int quantity = Integer.parseInt(value);
+            Cart.getInstance().restoreMap();
             Optional<Integer> cardQuantity = Cart.getInstance().getCartQuantity (productId);
 
             if(cardQuantity.isEmpty()){

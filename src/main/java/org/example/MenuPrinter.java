@@ -30,7 +30,10 @@ public class MenuPrinter {
                         productTableModifyMenu(scanner);
                     }
                     case 2 -> handleAddToCart(scanner);
-                    case 3 -> currentOptionsMenuVariant = MenuOptionsVariant.CART_MENU;
+                    case 3 -> {
+                        Cart.getInstance().handlePromotionChange();
+                        currentOptionsMenuVariant = MenuOptionsVariant.CART_MENU;
+                    }
                     case 4 -> {
                         if (Cart.getInstance().getAmountOfProducts() > 0) {
                             System.out.println("\nYou must remove items from your cart first! (Press Enter to continue)");

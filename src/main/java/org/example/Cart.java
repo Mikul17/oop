@@ -26,15 +26,11 @@ public class Cart {
         }
     }
 
-
-    //TODO: fix bug where cannot remove 2 items with id 1 when 2 has 3_ZA_1 promotion applied
     public void removeProduct(int productId, int quantity) {
         if(promotionCode != null) {
             System.out.println("Removing applied promotion code");
             this.promotionCode = null;
-            restoreMap();
         }
-
         Product product = Catalog.getInstance().getProductById(productId);
         if (product != null) {
             insertOrUpdate(product, -quantity);
@@ -106,12 +102,16 @@ public class Cart {
         }
     }
 
-    private void handlePromotionChange() {
+    void handlePromotionChange() {
+        if(promotionCode == null) {
+            return;
+        }
+        restoreMap();
         this.cart = this.promotionCode.apply(cart);
         recalculateTotalPrice();
     }
 
-    private void restoreMap(){
+    void restoreMap(){
         this.cart = MapUtils.mapInheritedToBase(
                 cart,
                 key -> (key instanceof PromotionProduct p) ?

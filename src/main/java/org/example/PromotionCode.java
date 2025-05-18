@@ -62,10 +62,23 @@ public enum PromotionCode implements PromotionStrategy {
             "When buying 2 identical products, second one is 50% off",
             "DWOJA") {
 
-        //TODO: Implement
+
         @Override
         public Map<Product, Integer> apply(Map<Product, Integer> cart) {
-            return MapUtils.collapsToMap(List.of());
+            List<Product> suitable = new ArrayList<>();
+            for(Map.Entry<Product, Integer> entry : cart.entrySet()) {
+                int amount = entry.getValue() /2 ;
+                for(int i=0; i<amount; i++) {
+                    var discounted = new PromotionProduct(entry.getKey(), entry.getKey().getPrice() /2);
+                    suitable.add(discounted);
+                    cart.put(entry.getKey(), entry.getValue()-1);
+                }
+            }
+            var collapsed = MapUtils.collapsToList(cart);
+
+            suitable.addAll(collapsed);
+
+            return MapUtils.collapsToMap(suitable);
         }
     };
 
