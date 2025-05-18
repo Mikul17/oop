@@ -52,8 +52,9 @@ public class MenuPrinter {
                         scanner.nextLine();
                     }
                     case 3 -> {
-                        Cart.getInstance().applyDiscount(0.5);
-                        System.out.println("\nDiscount applied. (Press Enter to continue)");
+                        System.out.println("\nEnter code (Only 1 promotion code can be activated at once): ");
+                        var code = scanner.nextLine();
+                        Cart.getInstance().applyDiscount(code);
                         scanner.nextLine();
                     }
                     case 4 -> currentOptionsMenuVariant = MenuOptionsVariant.MAIN_MENU;
@@ -68,7 +69,6 @@ public class MenuPrinter {
         printProductTable();
         printOptionsMenu();
         printFrameBottom();
-
     }
 
     private static void printProductTable() {
@@ -86,7 +86,7 @@ public class MenuPrinter {
             rows.add(List.of(
                     String.valueOf(p.getId()),
                     p.getName(),
-                    String.valueOf(p.getPrice()),
+                    df.format(p.getPrice()),
                     String.valueOf(p.getCategory()),
                     String.valueOf(p.getStock())
             ));
@@ -168,7 +168,7 @@ public class MenuPrinter {
             rows.add(List.of(
                     String.valueOf(p.getId()),
                     p.getName(),
-                    String.valueOf(p.getPrice()),
+                    df.format(p.getPrice()),
                     String.valueOf(p.getCategory()),
                     String.valueOf(quantity)
             ));
@@ -367,13 +367,17 @@ public class MenuPrinter {
         System.out.println(horizontalBorder);
 
         int amountOfProducts = Cart.getInstance().getAmountOfProducts();
+        var activePromotion = Cart.getInstance().getActivePromotionCode();
         String cartText = "Cart (" + amountOfProducts + ")";
 
         String totalPrice = "Total Price: $" + df.format(Cart.getInstance().getTotalPrice());
         System.out.println("|" + padLeft(cartText) + "|");
+
         if(Cart.getInstance().getTotalPrice() > 0){
             System.out.println("|" + padLeft(totalPrice) + "|");
         }
+
+        activePromotion.ifPresent(s -> System.out.println("|" + padLeft("Active code: " + s) + "|"));
 
         String welcomeText = "Welcome to Merito Clothing Shop";
         System.out.println("|" + centerPad(welcomeText, WIDTH - 2) + "|");

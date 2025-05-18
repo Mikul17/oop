@@ -3,6 +3,7 @@ package org.example;
 import lombok.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -12,33 +13,43 @@ public class Cart {
     private static final Cart instance = new Cart();
     @Getter
     private double totalPrice;
-    private final Map<Product, Integer> cart = new HashMap<>();
+    private Map<Product, Integer> cart = new HashMap<>();
+    private PromotionCode promotionCode;
 
     public void addProduct(int productId, int quantity) {
         Product product = Catalog.getInstance().getProductById(productId);
         if (product != null) {
             insertOrUpdate(product, quantity);
             product.updateStock(-quantity);
-            totalPrice += product.getPrice() * quantity;
+            recalculateTotalPrice();
             System.out.println(quantity + " x "+ product.getName() +" added to cart. (Press Enter to continue)");
         }
     }
 
     public void removeProduct(int productId, int quantity) {
+        if(promotionCode != null) {
+            System.out.println("Removing applied promotion code");
+            this.promotionCode = null;
+            restoreMap();
+        }
+
         Product product = Catalog.getInstance().getProductById(productId);
         if (product != null) {
             insertOrUpdate(product, -quantity);
             product.updateStock(quantity);
-            totalPrice -= product.getPrice() * quantity;
+            recalculateTotalPrice();
         }
     }
 
     public void clearCart() {
+        restoreMap();
         for(Product product : cart.keySet()) {
-            product.updateStock(cart.get(product));
+            var quantity = cart.get(product);
+            Catalog.getInstance().getProductById(product.getId()).updateStock(quantity);
         }
         cart.clear();
-        totalPrice = 0;
+        promotionCode = null;
+        recalculateTotalPrice();
     }
 
     public int getAmountOfProducts() {
@@ -49,8 +60,16 @@ public class Cart {
         return amount;
     }
 
-    public void applyDiscount(double discount) {
-        totalPrice = totalPrice - totalPrice * discount;
+    public void applyDiscount(String code){
+        PromotionCode promotionCode = PromotionCode.from(code).orElse(null);
+        if(promotionCode != null){
+            this.promotionCode = promotionCode;
+            restoreMap();
+            System.out.println("\nDiscount applied - "+promotionCode.getDescription()+" (Press Enter to continue)");
+            handlePromotionChange();
+            return;
+        }
+        System.out.println("Invalid promotion code. (Press Enter to continue)");
     }
 
     public Map<Product, Integer> getCartItems() {
@@ -71,5 +90,38 @@ public class Cart {
         if(cart.get(product) <= 0) {
             cart.remove(product);
         }
+    }
+
+    private void recalculateTotalPrice() {
+        totalPrice = 0;
+
+        if(cart.isEmpty()) {
+            return;
+        }
+
+        for(Map.Entry<Product, Integer> entry : cart.entrySet()) {
+            totalPrice += entry.getKey().getPrice() * entry.getValue();
+        }
+    }
+
+    private void handlePromotionChange() {
+        this.cart = this.promotionCode.apply(cart);
+        recalculateTotalPrice();
+    }
+
+    private void restoreMap(){
+        this.cart = MapUtils.mapInheritedToBase(
+                cart,
+                key -> (key instanceof PromotionProduct p) ?
+                        new Product(p.getId(), p.getName(), p.getOriginalPrice(), p.getCategory(), p.getStock(), p.isAvailable())
+                        : key
+                ,
+                Integer::sum
+        );
+    }
+
+    public Optional<String> getActivePromotionCode(){
+        if(this.promotionCode == null) {return Optional.empty();}
+        return Optional.of(this.promotionCode.getPromotionCode());
     }
 }
