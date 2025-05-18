@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class MapUtils {
 
-    public static <T> List<T> collapsToList(Map<T, Integer> map){
+    public static <T> List<T> collapseToList(Map<T, Integer> map){
         List<T> list = new ArrayList<T>();
         map.forEach((k,v)->{
             for(int i = 0; i<v ; i++){
@@ -20,7 +20,7 @@ public class MapUtils {
         return list;
     }
 
-    public static <T> Map<T, Integer> collapsToMap(List<T> list){
+    public static <T> Map<T, Integer> collapseToMap(List<T> list){
         return list.stream()
                 .collect(Collectors.toMap(
                         Function.identity(),

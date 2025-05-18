@@ -20,7 +20,7 @@ public enum PromotionCode implements PromotionStrategy {
 
         @Override
         public Map<Product, Integer> apply(Map<Product, Integer> cart) {
-            List<Product> products = MapUtils.collapsToList(cart);
+            List<Product> products = MapUtils.collapseToList(cart);
 
             List<Product> promotionProducts = products.stream()
                     .map(product -> new PromotionProduct(
@@ -28,7 +28,7 @@ public enum PromotionCode implements PromotionStrategy {
                             )
                     ).collect(Collectors.toList());
 
-            return MapUtils.collapsToMap(promotionProducts);
+            return MapUtils.collapseToMap(promotionProducts);
         }
     },
 
@@ -38,7 +38,7 @@ public enum PromotionCode implements PromotionStrategy {
 
         @Override
         public Map<Product, Integer> apply(Map<Product, Integer> cart) {
-            List<Product> products = MapUtils.collapsToList(cart);
+            List<Product> products = MapUtils.collapseToList(cart);
 
             int toBeDiscounted = products.size() / 3;
 
@@ -54,7 +54,7 @@ public enum PromotionCode implements PromotionStrategy {
             ).toList();
 
 
-            return MapUtils.collapsToMap(result);
+            return MapUtils.collapseToMap(result);
         }
     },
 
@@ -71,14 +71,14 @@ public enum PromotionCode implements PromotionStrategy {
                 for(int i=0; i<amount; i++) {
                     var discounted = new PromotionProduct(entry.getKey(), entry.getKey().getPrice() /2);
                     suitable.add(discounted);
-                    cart.put(entry.getKey(), entry.getValue()-1);
+                    entry.setValue(entry.getValue() - 1);
                 }
             }
-            var collapsed = MapUtils.collapsToList(cart);
+            var collapsed = MapUtils.collapseToList(cart);
 
             suitable.addAll(collapsed);
 
-            return MapUtils.collapsToMap(suitable);
+            return MapUtils.collapseToMap(suitable);
         }
     };
 
