@@ -21,5 +21,4 @@ public class ProductLoader {
             System.out.println("Error while loading products: " + e.getMessage());
         }
     }
-
 }
