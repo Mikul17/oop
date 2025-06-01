@@ -1,9 +1,14 @@
-package org.example;
+package org.example.menu;
 
+import org.example.Cart;
+import org.example.Catalog;
 import org.example.filters.Criteria;
 import org.example.filters.ProductCriteria;
 import org.example.filters.SortField;
 import org.example.filters.SortingDirection;
+import org.example.product.Product;
+import org.example.product.ProductCategory;
+import org.example.product.ProductService;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -104,14 +109,14 @@ public class MenuPrinter {
         System.out.println("3. Filter by category");
         System.out.println("4. Clear filters");
         String input = scanner.nextLine();
-        try{
+        try {
             int choice1 = Integer.parseInt(input);
             int choice2 = -1;
-            if(choice1 < 3) {
+            if (choice1 < 3) {
                 System.out.println("1. Ascending");
                 System.out.println("2. Descending");
                 input = scanner.nextLine();
-                choice2= Integer.parseInt(input);
+                choice2 = Integer.parseInt(input);
             }
             var order = SortingDirection.from(choice2);
             switch (choice1) {
@@ -125,7 +130,7 @@ public class MenuPrinter {
                     System.out.println("Order by price applied. (Press Enter to continue)");
                     break;
                 }
-                case 3:  {
+                case 3: {
                     printProductFiltering(scanner);
                     break;
                 }
@@ -139,7 +144,7 @@ public class MenuPrinter {
                     break;
                 }
             }
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             System.out.println("Invalid choice. (Press Enter to continue)");
         }
         scanner.nextLine();
@@ -149,7 +154,7 @@ public class MenuPrinter {
         System.out.println("Select category:");
         int i = 1;
         for (ProductCategory c : ProductCategory.values()) {
-            System.out.println(i+". " + c.name());
+            System.out.println(i + ". " + c.name());
             i++;
         }
         String input = scanner.nextLine();
@@ -158,7 +163,7 @@ public class MenuPrinter {
             ProductCategory category = ProductCategory.values()[choice - 1];
             filterCriteria = ProductCriteria.categoryIn(Set.of(category));
             System.out.println("Selected category: " + category.name() + " (Press Enter to continue)");
-        } catch (NumberFormatException | IndexOutOfBoundsException e){
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
             System.out.println("Invalid choice. (Press Enter to continue)");
         }
     }
@@ -206,7 +211,7 @@ public class MenuPrinter {
             System.out.println("Enter quantity: ");
             String qty = scanner.nextLine();
 
-            if(ProductService.getInstance().validateAdditionQuantity(qty, productId)) {
+            if (ProductService.getInstance().validateAdditionQuantity(qty, productId)) {
                 Cart.getInstance().addProduct(productId, Integer.parseInt(qty));
             }
 
@@ -224,9 +229,8 @@ public class MenuPrinter {
             System.out.println("Enter quantity: ");
             String qty = scanner.nextLine();
 
-            if(ProductService.getInstance().validateRemovalQuantity(qty, productId)) {
+            if (ProductService.getInstance().validateRemovalQuantity(qty, productId)) {
                 Cart.getInstance().removeProduct(productId, Integer.parseInt(qty));
-                System.out.println("Removed "+ qty +" product(s) with Id "+ productId +" (Press Enter to continue)");
             }
 
         } catch (NumberFormatException e) {
@@ -237,12 +241,12 @@ public class MenuPrinter {
 
     //Utility
 
-    private static List<Criteria> handleFilterChange(){
+    private static List<Criteria> handleFilterChange() {
         List<Criteria> filters = new ArrayList<>();
-        if(sortingCriteria != null) {
+        if (sortingCriteria != null) {
             filters.add(sortingCriteria);
         }
-        if(filterCriteria != null) {
+        if (filterCriteria != null) {
             filters.add(filterCriteria);
         }
         return filters;
@@ -376,7 +380,7 @@ public class MenuPrinter {
         String totalPrice = "Total Price: $" + df.format(Cart.getInstance().getTotalPrice());
         System.out.println("|" + padLeft(cartText) + "|");
 
-        if(Cart.getInstance().getTotalPrice() > 0){
+        if (Cart.getInstance().getTotalPrice() > 0) {
             System.out.println("|" + padLeft(totalPrice) + "|");
         }
 

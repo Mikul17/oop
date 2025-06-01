@@ -1,10 +1,6 @@
-package org.example;
+package org.example.product;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-
-import java.math.BigDecimal;
-import java.util.Objects;
 
 
 @Getter

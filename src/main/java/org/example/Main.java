@@ -1,8 +1,8 @@
 package org.example;
 
 
-import static org.example.MenuPrinter.runMenu;
-import static org.example.ProductLoader.loadProducts;
+import static org.example.menu.MenuPrinter.runMenu;
+import static org.example.utils.ProductLoader.loadProducts;
 
 public class Main {
     public static void main(String[] args) {

@@ -1,4 +1,6 @@
-package org.example;
+package org.example.promotion;
+
+import org.example.product.Product;
 
 import java.util.Map;
 
