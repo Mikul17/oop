@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static org.example.TestUtils.initializeCatalogWithSampleProduct;
+import static org.example.utils.TestUtils.initializeCatalogWithSampleProduct;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProductServiceTest {
@@ -14,10 +14,11 @@ public class ProductServiceTest {
     @BeforeEach
     public void setUp() {
         Catalog.getInstance().getProductList().clear();
+        Cart.getInstance().getCartItems().clear();
     }
 
     @Test
-    public void shouldAddWhenValidQty(){
+    public void shouldAddWhenValidQty() {
         //given
         initializeCatalogWithSampleProduct();
         //when
@@ -27,7 +28,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void shouldNotAddWhenInvalidQty(){
+    public void shouldNotAddWhenInvalidQty() {
         //given
         initializeCatalogWithSampleProduct();
         //when
@@ -37,7 +38,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void shouldNotAddWhenQtyMoreThanStock(){
+    public void shouldNotAddWhenQtyMoreThanStock() {
         //given
         initializeCatalogWithSampleProduct();
         //when
@@ -47,7 +48,7 @@ public class ProductServiceTest {
     }
 
     @Test
-    public void shouldNotAddNonExistingProduct(){
+    public void shouldNotAddNonExistingProduct() {
         //given
         initializeCatalogWithSampleProduct();
         //when
@@ -73,7 +74,7 @@ public class ProductServiceTest {
         //given
         var cart = Cart.getInstance();
         //when
-        var expected = ProductService.getInstance().validateRemovalQuantity("3", 1);
+        var expected = ProductService.getInstance().validateRemovalQuantity("3", 99);
         //then
         assertFalse(expected);
         assertEquals(Optional.empty(), cart.getCartQuantity(1));

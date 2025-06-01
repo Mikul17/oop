@@ -25,12 +25,12 @@ public class Cart {
             insertOrUpdate(product, quantity);
             product.updateStock(-quantity);
             recalculateTotalPrice();
-            System.out.println(quantity + " x "+ product.getName() +" added to cart. (Press Enter to continue)");
+            System.out.println(quantity + " x " + product.getName() + " added to cart. (Press Enter to continue)");
         }
     }
 
     public void removeProduct(int productId, int quantity) {
-        if(promotionCode != null) {
+        if (promotionCode != null) {
             System.out.println("Removing applied promotion code");
             this.promotionCode = null;
         }
@@ -39,13 +39,13 @@ public class Cart {
             insertOrUpdate(product, -quantity);
             product.updateStock(quantity);
             recalculateTotalPrice();
-            System.out.println("Removed "+ quantity +" product(s) with Id "+ productId +" (Press Enter to continue)");
+            System.out.println("Removed " + quantity + " product(s) with Id " + productId + " (Press Enter to continue)");
         }
     }
 
     public void clearCart() {
         restoreMap();
-        for(Product product : cart.keySet()) {
+        for (Product product : cart.keySet()) {
             var quantity = cart.get(product);
             Catalog.getInstance().getProductById(product.getId()).updateStock(quantity);
         }
@@ -62,12 +62,12 @@ public class Cart {
         return amount;
     }
 
-    public void applyDiscount(String code){
+    public void applyDiscount(String code) {
         PromotionCode promotionCode = PromotionCode.from(code).orElse(null);
-        if(promotionCode != null){
+        if (promotionCode != null) {
             this.promotionCode = promotionCode;
             restoreMap();
-            System.out.println("\nDiscount applied - "+promotionCode.getDescription()+" (Press Enter to continue)");
+            System.out.println("\nDiscount applied - " + promotionCode.getDescription() + " (Press Enter to continue)");
             handlePromotionChange();
             return;
         }
@@ -78,13 +78,13 @@ public class Cart {
         return cart;
     }
 
-    public Optional<Integer> getCartQuantity (int productId) {
+    public Optional<Integer> getCartQuantity(int productId) {
         Product product = Catalog.getInstance().getProductById(productId);
         return cart.containsKey(product) ? Optional.of(cart.get(product)) : Optional.empty();
     }
 
     public void handlePromotionChange() {
-        if(promotionCode == null) {
+        if (promotionCode == null) {
             return;
         }
         restoreMap();
@@ -92,7 +92,7 @@ public class Cart {
         recalculateTotalPrice();
     }
 
-    public void restoreMap(){
+    public void restoreMap() {
         this.cart = MapUtils.mapInheritedToBase(
                 cart,
                 key -> (key instanceof PromotionProduct p) ?
@@ -103,8 +103,10 @@ public class Cart {
         );
     }
 
-    public Optional<String> getActivePromotionCode(){
-        if(this.promotionCode == null) {return Optional.empty();}
+    public Optional<String> getActivePromotionCode() {
+        if (this.promotionCode == null) {
+            return Optional.empty();
+        }
         return Optional.of(this.promotionCode.getPromotionCode());
     }
 
@@ -114,7 +116,7 @@ public class Cart {
         } else {
             cart.put(product, quantity);
         }
-        if(cart.get(product) <= 0) {
+        if (cart.get(product) <= 0) {
             cart.remove(product);
         }
     }
@@ -122,11 +124,11 @@ public class Cart {
     private void recalculateTotalPrice() {
         totalPrice = 0;
 
-        if(cart.isEmpty()) {
+        if (cart.isEmpty()) {
             return;
         }
 
-        for(Map.Entry<Product, Integer> entry : cart.entrySet()) {
+        for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
             totalPrice += entry.getKey().getPrice() * entry.getValue();
         }
     }

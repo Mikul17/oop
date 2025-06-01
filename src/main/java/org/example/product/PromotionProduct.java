@@ -8,10 +8,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-public class PromotionProduct extends Product{
+public class PromotionProduct extends Product {
     private double promotionPrice;
 
-    public PromotionProduct(Product product, double promotionPrice){
+    public PromotionProduct(Product product, double promotionPrice) {
         super(product.getId(),
                 product.getName(),
                 product.getPrice(),
@@ -26,7 +26,7 @@ public class PromotionProduct extends Product{
         return promotionPrice;
     }
 
-    public double getOriginalPrice(){
+    public double getOriginalPrice() {
         return super.getPrice();
     }
 

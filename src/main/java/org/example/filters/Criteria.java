@@ -8,6 +8,7 @@ import java.util.function.Predicate;
 
 public sealed interface Criteria permits ProductCriteria.GenericCriteria {
     Predicate<Product> toPredicate();
+
     Optional<Comparator<Product>> toComparator();
 }
 

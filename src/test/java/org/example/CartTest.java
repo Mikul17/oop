@@ -3,9 +3,10 @@ package org.example;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.Optional;
 
-import static org.example.TestUtils.sampleProductWithId;
+import static org.example.utils.TestUtils.sampleProductWithId;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CartTest {
@@ -22,7 +23,7 @@ public class CartTest {
         var product = sampleProductWithId(1);
         Catalog.getInstance().getProductList().add(product);
         //when
-        Cart.getInstance().addProduct(1, 3);;
+        Cart.getInstance().addProduct(1, 3);
         //then
         assertTrue(Cart.getInstance().getCartItems().containsKey(product));
         assertEquals(3, Cart.getInstance().getCartItems().get(product));
@@ -72,7 +73,7 @@ public class CartTest {
     }
 
     @Test
-    void shouldNotApplyDiscountFromUnknowCode(){
+    void shouldNotApplyDiscountFromUnknowCode() {
         //given
         var cart = Cart.getInstance();
 

@@ -1,5 +1,6 @@
-package org.example;
+package org.example.utils;
 
+import org.example.Catalog;
 import org.example.product.Product;
 import org.example.product.ProductCategory;
 

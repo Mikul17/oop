@@ -1,10 +1,6 @@
 package org.example.product;
 
 import lombok.*;
-import org.example.Cart;
-import org.example.Catalog;
-
-import java.util.Optional;
 
 
 @Getter

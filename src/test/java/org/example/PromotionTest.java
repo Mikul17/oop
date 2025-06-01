@@ -8,8 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static org.example.TestUtils.sampleProduct;
-import static org.example.TestUtils.sampleProductWithId;
+import static org.example.utils.TestUtils.sampleProduct;
+import static org.example.utils.TestUtils.sampleProductWithId;
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -28,6 +28,7 @@ class PromotionTest {
         //then
         assertTrue(result.containsKey(discountedProduct));
     }
+
     @Test
     void shouldApplyOneForHalfPromotionCode() {
         //given
@@ -79,7 +80,7 @@ class PromotionTest {
     }
 
     @Test
-    void shouldCancelPromotionAfterRemovingItems(){
+    void shouldCancelPromotionAfterRemovingItems() {
         //given
         var product = sampleProduct();
         Catalog.getInstance().getProductList().add(product);
@@ -95,7 +96,7 @@ class PromotionTest {
     }
 
     @Test
-    void shouldNotApplySamePromotionCodeTwice(){
+    void shouldNotApplySamePromotionCodeTwice() {
         //given
         var product = sampleProduct();
         var promotionProduct = new PromotionProduct(product, 9);

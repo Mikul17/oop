@@ -20,7 +20,6 @@ public enum PromotionCode implements PromotionStrategy {
     TEN_PERCENT(
             "10% discount on all products",
             "DZIESIONA") {
-
         @Override
         public Map<Product, Integer> apply(Map<Product, Integer> cart) {
             List<Product> products = MapUtils.collapseToList(cart);
@@ -38,7 +37,6 @@ public enum PromotionCode implements PromotionStrategy {
     CHEAPEST_FOR_ONE(
             "When buying 3 products, get cheapest one for 1 PLN",
             "3_ZA_1") {
-
         @Override
         public Map<Product, Integer> apply(Map<Product, Integer> cart) {
             List<Product> products = MapUtils.collapseToList(cart);
@@ -64,15 +62,13 @@ public enum PromotionCode implements PromotionStrategy {
     ONE_FOR_HALF(
             "When buying 2 identical products, second one is 50% off",
             "DWOJA") {
-
-
         @Override
         public Map<Product, Integer> apply(Map<Product, Integer> cart) {
             List<Product> suitable = new ArrayList<>();
-            for(Map.Entry<Product, Integer> entry : cart.entrySet()) {
-                int amount = entry.getValue() /2 ;
-                for(int i=0; i<amount; i++) {
-                    var discounted = new PromotionProduct(entry.getKey(), entry.getKey().getPrice() /2);
+            for (Map.Entry<Product, Integer> entry : cart.entrySet()) {
+                int amount = entry.getValue() / 2;
+                for (int i = 0; i < amount; i++) {
+                    var discounted = new PromotionProduct(entry.getKey(), entry.getKey().getPrice() / 2);
                     suitable.add(discounted);
                     entry.setValue(entry.getValue() - 1);
                 }

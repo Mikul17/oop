@@ -17,7 +17,7 @@ public class Catalog {
     private final List<Product> productList = new ArrayList<>();
 
     public List<Product> getFilteredProductList(List<Criteria> criteriaList) {
-        if(criteriaList.isEmpty()) {
+        if (criteriaList.isEmpty()) {
             return productList.stream().filter(Product::isAvailable).collect(Collectors.toList());
         }
         Predicate<Product> pred = criteriaList.stream()

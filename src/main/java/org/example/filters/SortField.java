@@ -14,7 +14,7 @@ public enum SortField {
 
     public Comparator<Product> comparatorFor(SortingDirection direction) {
         return direction == SortingDirection.DESCENDING ?
-                this.baseComparator.reversed():
+                this.baseComparator.reversed() :
                 this.baseComparator;
     }
 }
