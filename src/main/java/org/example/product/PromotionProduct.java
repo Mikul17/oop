@@ -1,4 +1,4 @@
-package org.example;
+package org.example.product;
 
 import lombok.*;
 
@@ -11,7 +11,7 @@ import lombok.*;
 public class PromotionProduct extends Product{
     private double promotionPrice;
 
-    PromotionProduct(Product product, double promotionPrice){
+    public PromotionProduct(Product product, double promotionPrice){
         super(product.getId(),
                 product.getName(),
                 product.getPrice(),

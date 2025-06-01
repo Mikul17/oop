@@ -1,7 +1,10 @@
-package org.example;
+package org.example.promotion;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.example.utils.MapUtils;
+import org.example.product.Product;
+import org.example.product.PromotionProduct;
 import org.example.filters.ProductCriteria;
 import org.example.filters.SortField;
 import org.example.filters.SortingDirection;

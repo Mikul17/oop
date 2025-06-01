@@ -1,6 +1,6 @@
 package org.example.filters;
 
-import org.example.Product;
+import org.example.product.Product;
 
 import java.util.Comparator;
 import java.util.Optional;

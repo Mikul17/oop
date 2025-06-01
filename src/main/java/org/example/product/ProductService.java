@@ -1,6 +1,8 @@
-package org.example;
+package org.example.product;
 
 import lombok.Getter;
+import org.example.Cart;
+import org.example.Catalog;
 
 import java.util.Optional;
 
@@ -36,7 +38,7 @@ public class ProductService {
         try{
             int quantity = Integer.parseInt(value);
             Cart.getInstance().restoreMap();
-            Optional<Integer> cardQuantity = Cart.getInstance().getCartQuantity (productId);
+            Optional<Integer> cardQuantity = Cart.getInstance().getCartQuantity(productId);
 
             if(cardQuantity.isEmpty()){
                 System.out.println("Product with id " + productId + " is not in cart. (Press Enter to continue)");

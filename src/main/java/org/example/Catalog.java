@@ -2,6 +2,7 @@ package org.example;
 
 import lombok.*;
 import org.example.filters.Criteria;
+import org.example.product.Product;
 
 import java.util.*;
 import java.util.function.Predicate;

@@ -1,9 +1,14 @@
-package org.example;
+package org.example.menu;
 
+import org.example.Cart;
+import org.example.Catalog;
 import org.example.filters.Criteria;
 import org.example.filters.ProductCriteria;
 import org.example.filters.SortField;
 import org.example.filters.SortingDirection;
+import org.example.product.Product;
+import org.example.product.ProductCategory;
+import org.example.product.ProductService;
 
 import java.text.DecimalFormat;
 import java.util.*;
@@ -226,7 +231,6 @@ public class MenuPrinter {
 
             if(ProductService.getInstance().validateRemovalQuantity(qty, productId)) {
                 Cart.getInstance().removeProduct(productId, Integer.parseInt(qty));
-                System.out.println("Removed "+ qty +" product(s) with Id "+ productId +" (Press Enter to continue)");
             }
 
         } catch (NumberFormatException e) {

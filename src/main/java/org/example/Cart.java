@@ -1,9 +1,12 @@
 package org.example;
 
 import lombok.*;
+import org.example.promotion.PromotionCode;
+import org.example.product.Product;
+import org.example.product.PromotionProduct;
+import org.example.utils.MapUtils;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -36,6 +39,7 @@ public class Cart {
             insertOrUpdate(product, -quantity);
             product.updateStock(quantity);
             recalculateTotalPrice();
+            System.out.println("Removed "+ quantity +" product(s) with Id "+ productId +" (Press Enter to continue)");
         }
     }
 
@@ -79,6 +83,31 @@ public class Cart {
         return cart.containsKey(product) ? Optional.of(cart.get(product)) : Optional.empty();
     }
 
+    public void handlePromotionChange() {
+        if(promotionCode == null) {
+            return;
+        }
+        restoreMap();
+        this.cart = this.promotionCode.apply(cart);
+        recalculateTotalPrice();
+    }
+
+    public void restoreMap(){
+        this.cart = MapUtils.mapInheritedToBase(
+                cart,
+                key -> (key instanceof PromotionProduct p) ?
+                        new Product(p.getId(), p.getName(), p.getOriginalPrice(), p.getCategory(), p.getStock(), p.isAvailable())
+                        : key
+                ,
+                Integer::sum
+        );
+    }
+
+    public Optional<String> getActivePromotionCode(){
+        if(this.promotionCode == null) {return Optional.empty();}
+        return Optional.of(this.promotionCode.getPromotionCode());
+    }
+
     private void insertOrUpdate(Product product, int quantity) {
         if (cart.containsKey(product)) {
             cart.put(product, cart.get(product) + quantity);
@@ -100,30 +129,5 @@ public class Cart {
         for(Map.Entry<Product, Integer> entry : cart.entrySet()) {
             totalPrice += entry.getKey().getPrice() * entry.getValue();
         }
-    }
-
-    void handlePromotionChange() {
-        if(promotionCode == null) {
-            return;
-        }
-        restoreMap();
-        this.cart = this.promotionCode.apply(cart);
-        recalculateTotalPrice();
-    }
-
-    void restoreMap(){
-        this.cart = MapUtils.mapInheritedToBase(
-                cart,
-                key -> (key instanceof PromotionProduct p) ?
-                        new Product(p.getId(), p.getName(), p.getOriginalPrice(), p.getCategory(), p.getStock(), p.isAvailable())
-                        : key
-                ,
-                Integer::sum
-        );
-    }
-
-    public Optional<String> getActivePromotionCode(){
-        if(this.promotionCode == null) {return Optional.empty();}
-        return Optional.of(this.promotionCode.getPromotionCode());
     }
 }

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.product;
 
 
 public enum ProductCategory {

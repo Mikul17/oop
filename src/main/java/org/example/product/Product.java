@@ -1,10 +1,10 @@
-package org.example;
+package org.example.product;
 
 import lombok.*;
-import lombok.experimental.SuperBuilder;
+import org.example.Cart;
+import org.example.Catalog;
 
-import java.math.BigDecimal;
-import java.util.Objects;
+import java.util.Optional;
 
 
 @Getter
